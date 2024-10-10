@@ -34,9 +34,6 @@ export default function MicrophoneAudioTrack({
                     }
                 );
                 mediaRecorder.start();
-                mediaRecorder.ondataavailable = (e) => {
-                    console.log(e.data);
-                };
                 setmediaRecorder(
                     mediaRecorder
                 );
@@ -52,7 +49,7 @@ export default function MicrophoneAudioTrack({
         <div>
             <audio ref={audioRef} onEnded={() => {
                 setIsPlaying(false);
-            }} hidden src="https://samplelib.com/lib/preview/mp3/sample-12s.mp3" >
+            }} hidden>
             </audio>
             <div className="flex items-center gap-2">
                 <button

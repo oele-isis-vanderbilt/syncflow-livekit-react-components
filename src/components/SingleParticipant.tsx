@@ -4,7 +4,6 @@ import {
   useParticipantInfo,
   useParticipantTracks,
   VideoTrack,
-  AudioTrack,
 } from "@livekit/components-react";
 import {
   Video,
@@ -120,7 +119,7 @@ export default function SingleParticipant() {
           {activeView === "audio" && participantAudioTrackRef && (
             <div className="flex flex-row gap-2 items-center justify-between">
               <div className="">
-                {participantInfo.identity}{' '}({participantAudioTrackRef.publication.kind})
+                {participantInfo.identity}{' '}({participantAudioTrackRef.source})
               </div>
               <div>
               <ParticipantAudioTrack
