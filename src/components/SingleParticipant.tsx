@@ -15,6 +15,8 @@ import {
   ScreenShare,
 } from "lucide-react";
 
+import ParticipantAudioTrack from "./ParticipantAudioTrack";
+
 export default function SingleParticipant() {
   const participantInfo = useParticipantInfo();
   const pName = participantInfo.identity;
@@ -118,8 +120,9 @@ export default function SingleParticipant() {
           {activeView === "audio" && participantAudioTrackRef && (
             <div className="bg-blue-600">
               <h6>Audio Bar </h6>
-              <AudioTrack
+              <ParticipantAudioTrack
                 trackRef={participantAudioTrackRef}
+                participant={participantInfo}
               />
             </div>
           )}

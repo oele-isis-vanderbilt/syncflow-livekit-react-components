@@ -1,5 +1,6 @@
 import { LiveKitRoom } from "@livekit/components-react";
 import ParticipantList from "./ParticipantList";
+import ParticpantAudioTrack from "./ParticipantAudioTrack";
 
 export default function Room({ token }: { token: string }) {
   return (
