@@ -1,5 +1,5 @@
 import { LiveKitRoom } from "@livekit/components-react";
-import ParticipantList from "./ParticipantList";
+import ParticipantList from "./participants/participant-list";
 
 export default function Room({ token }: { token: string }) {
   return (

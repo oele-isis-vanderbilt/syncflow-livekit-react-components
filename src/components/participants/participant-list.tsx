@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ParticipantLoop, useParticipants } from "@livekit/components-react";
+import { ParticipantLoop, useParticipants, useRoomInfo } from "@livekit/components-react";
 import { Search } from "lucide-react";
-import SingleParticipant from "./SingleParticipant";
+import SingleParticipant from "./single-participant";
 
 export default function ParticipantList() {
   const participants = useParticipants();
