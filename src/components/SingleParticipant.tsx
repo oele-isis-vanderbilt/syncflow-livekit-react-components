@@ -4,7 +4,6 @@ import {
   useParticipantInfo,
   useParticipantTracks,
   VideoTrack,
-  AudioTrack,
 } from "@livekit/components-react";
 import {
   Video,
@@ -14,6 +13,8 @@ import {
   ChevronDown,
   ScreenShare,
 } from "lucide-react";
+
+import ParticipantAudioTrack from "./ParticipantAudioTrack";
 
 export default function SingleParticipant() {
   const participantInfo = useParticipantInfo();
@@ -116,11 +117,16 @@ export default function SingleParticipant() {
             />
           )}
           {activeView === "audio" && participantAudioTrackRef && (
-            <div className="bg-blue-600">
-              <h6>Audio Bar </h6>
-              <AudioTrack
+            <div className="flex flex-row gap-2 items-center justify-between">
+              <div className="">
+                {participantInfo.identity}{' '}({participantAudioTrackRef.source})
+              </div>
+              <div>
+              <ParticipantAudioTrack
                 trackRef={participantAudioTrackRef}
+                participant={participantInfo}
               />
+              </div>
             </div>
           )}
         </div>
