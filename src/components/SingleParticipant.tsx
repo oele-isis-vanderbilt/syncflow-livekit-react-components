@@ -118,12 +118,16 @@ export default function SingleParticipant() {
             />
           )}
           {activeView === "audio" && participantAudioTrackRef && (
-            <div className="bg-blue-600">
-              <h6>Audio Bar </h6>
+            <div className="flex flex-row gap-2 items-center justify-between">
+              <div className="">
+                {participantInfo.identity}{' '}({participantAudioTrackRef.publication.kind})
+              </div>
+              <div>
               <ParticipantAudioTrack
                 trackRef={participantAudioTrackRef}
                 participant={participantInfo}
               />
+              </div>
             </div>
           )}
         </div>
