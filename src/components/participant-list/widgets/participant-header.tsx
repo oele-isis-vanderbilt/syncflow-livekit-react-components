@@ -1,15 +1,25 @@
-import React from "react";
+import React, { ComponentProps } from "react";
 import {
   Video,
   Mic,
-  MoreHorizontal,
   ChevronUp,
   ChevronDown,
   ScreenShare,
 } from "lucide-react";
 import ParticipantInfo from "./participant-props";
+import { DeepPartial } from "../../../types";
+import { useParticipantListContext } from "../participant-list-context";
+import { mergeDeep } from "../../../helpers/merge-deep";
+import { twMerge } from "tailwind-merge";
 
-interface ParticipantHeaderProps {
+export interface SyncflowParticipantHeaderTheme {
+  base:string,
+  identity:string,
+  room:string,
+  inner:string
+}
+
+export interface ParticipantHeaderProps extends ComponentProps<"div">{
   participantInfo: ParticipantInfo;
   isExpanded: boolean;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +28,7 @@ interface ParticipantHeaderProps {
   hasVideo: boolean;
   hasAudio: boolean;
   hasScreenshare: boolean;
+  theme?: DeepPartial<SyncflowParticipantHeaderTheme>;
 }
 
 export default function ParticipantHeader({
@@ -28,15 +39,21 @@ export default function ParticipantHeader({
   handleViewToggle,
   hasVideo,
   hasAudio,
-  hasScreenshare
+  hasScreenshare,
+  theme:customTheme = {},
+  className
 }: ParticipantHeaderProps) {
+  const { theme: rootTheme } = useParticipantListContext();
+
+  const theme = mergeDeep(rootTheme.participant.header, customTheme);
+
   return (
-    <div className="flex justify-between items-center">
+    <div className={twMerge(theme.base, className)}>
       <div>
-        <div className="font-semibold">{participantInfo.identity}</div>
-        <div className="text-xs text-gray-400">RM_Qb77MRfZJphV</div>
+        <div className={theme.identity}>{participantInfo.identity}</div>
+        <div className={theme.room}>RM_Qb77MRfZJphV</div>
       </div>
-      <div className="flex items-center space-x-2">
+      <div className={theme.inner}>
         <ControlButtons
           hasVideo={hasVideo}
           hasAudio={hasAudio}

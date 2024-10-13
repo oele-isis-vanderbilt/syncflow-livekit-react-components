@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { ComponentProps, useState } from "react";
 import { Track } from "livekit-client";
 import {
   useParticipantInfo,
   useParticipantTracks,
 } from "@livekit/components-react";
-import ParticipantHeader from "./widgets/participant-header";
-import ParticipantVideoView from "./widgets/participant-video-view";
-import ParticipantAudioView from "./widgets/participant-audio-view";
+import ParticipantHeader, { SyncflowParticipantHeaderTheme } from "./widgets/participant-header";
+import ParticipantVideoView, { SyncflowParticipantVideoViewTheme } from "./widgets/participant-video-view";
+import ParticipantAudioView, { SyncflowParticipantAudioViewTheme } from "./widgets/participant-audio-view";import { SyncflowParticipantAudioTrackTheme } from "./widgets/participant-audio-track";
+import { DeepPartial } from "../../types";
+import { useParticipantListContext } from "./participant-list-context";
+import { mergeDeep } from "../../helpers/merge-deep";
+import { twMerge } from "tailwind-merge";
 
+export interface SyncflowSingleParticipantTheme {
+  base: string;
+  media: string;
+  header: SyncflowParticipantHeaderTheme;
+  audio: SyncflowParticipantAudioViewTheme;
+  video: SyncflowParticipantVideoViewTheme;
+}
 
-export default function SingleParticipant() {
+export interface SingleParticipantProps extends ComponentProps<"div"> {
+  theme?: DeepPartial<SyncflowSingleParticipantTheme>
+}
+
+export default function SingleParticipant({theme: customTheme = {}, className}:SingleParticipantProps) {
+  const { theme: rootTheme } = useParticipantListContext();
+  const theme = mergeDeep(rootTheme.participant, customTheme);
+  
   const participantInfo = useParticipantInfo();
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeView, setActiveView] = useState("camera");
@@ -41,7 +59,7 @@ export default function SingleParticipant() {
   };
 
   return (
-    <div className="bg-gray-900 text-white p-3 rounded-lg mb-2">
+    <div className={twMerge(theme.base, className)}>
       <ParticipantHeader
         participantInfo={participantInfo}
         isExpanded={isExpanded}
@@ -51,21 +69,23 @@ export default function SingleParticipant() {
         hasVideo={participantVideoTrackRefs.length > 0}
         hasAudio={participantAudioTrackRefs.length > 0}
         hasScreenshare = {participantScreenTrackRefs.length > 0}
+        theme={theme.header}
       />
       {isExpanded && (
-        <div className="mt-4 relative w-full h-48">
+        <div className={theme.media}>
           {activeView === "camera" && participantVideoTrackRefs.length > 0 && (
-            <ParticipantVideoView trackRefs={participantVideoTrackRefs} />
+            <ParticipantVideoView trackRefs={participantVideoTrackRefs} theme={theme.video} />
           )}
           {activeView === "audio" && participantAudioTrackRefs && (
             <ParticipantAudioView
               participantInfo={participantInfo}
               audioTrackRefs={participantAudioTrackRefs}
+              theme={theme.audio}
             />
           )}
           {activeView === "screenshare" &&
             participantScreenTrackRefs.length > 0 && (
-              <ParticipantVideoView trackRefs={participantScreenTrackRefs} />
+              <ParticipantVideoView trackRefs={participantScreenTrackRefs} theme={theme.video}/>
             )}
         </div>
       )}
