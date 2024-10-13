@@ -4,6 +4,8 @@ import { Search } from "lucide-react";
 import SingleParticipant from "./single-participant";
 
 export default function ParticipantList() {
+  const roomInfo = useRoomInfo();
+  console.log(roomInfo)
   const participants = useParticipants();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -11,11 +13,11 @@ export default function ParticipantList() {
     <div className="max-w-md mx-auto bg-gray-900 text-white p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Participants</h1>
-        <div className="relative">
+        <div className="relative w-full sm:w-48">
           <input
             type="text"
             placeholder="Search"
-            className="bg-blue-600 text-white pl-3 pr-8 py-1 rounded-md placeholder-white placeholder-opacity-75"
+            className="w-full bg-blue-600 text-white pl-3 pr-8 py-1 rounded-md placeholder-white placeholder-opacity-75"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
