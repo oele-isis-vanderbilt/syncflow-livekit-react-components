@@ -1,14 +1,36 @@
-import { useEffect, useRef, useState } from "react";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 import { Volume2 } from "lucide-react";
-import clsx from "clsx";
 import { TrackReference } from "@livekit/components-react";
 import { LiveAudioVisualizer } from "react-audio-visualize";
+import { DeepPartial } from "../../../types";
+import { useParticipantListContext } from "../participant-list-context";
+import { mergeDeep } from "../../../helpers/merge-deep";
+import { twMerge } from "tailwind-merge";
 
-export default function MicrophoneAudioTrack({
+export interface SyncflowParticipantAudioTrackTheme {
+  base: string,
+  inner: string
+  volume: {
+    base: string
+    on: string
+    off: string
+  }
+}
+
+export interface ParticipantAudioTrackProps extends ComponentProps<"div"> {
+  trackRef: TrackReference
+  theme?: DeepPartial<SyncflowParticipantAudioTrackTheme>;
+}
+
+export default function ParticipantAudioTrack({
   trackRef,
-}: {
-  trackRef: TrackReference;
-}) {
+  theme: customTheme ={},
+  className,
+}: ParticipantAudioTrackProps) {
+  const {theme: rootTheme} = useParticipantListContext();
+  
+  const theme = mergeDeep(rootTheme.participant.audio.audioTrack, customTheme)
+
   let audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -62,7 +84,7 @@ export default function MicrophoneAudioTrack({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className={twMerge(theme.base, className)}>
       <audio
         ref={audioRef}
         onEnded={() => {
@@ -70,13 +92,13 @@ export default function MicrophoneAudioTrack({
         }}
         hidden
       ></audio>
-      <div className="flex flex-col items-center gap-4">
+      <div className={theme.inner}>
         <button onClick={togglePlayback}>
           <Volume2
-            className={clsx("w-10 h-10", {
-              "text-gray-500": !isPlaying,
-              "text-green-500": isPlaying,
-            })}
+            className={twMerge(
+              theme.volume.base,
+              isPlaying ? theme.volume.on : theme.volume.off
+            )}
           />
         </button>
         <div>
