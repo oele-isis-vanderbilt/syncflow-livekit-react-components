@@ -8,6 +8,7 @@ import { DeepPartial } from "../../types";
 import { mergeDeep } from "../../helpers/merge-deep";
 import { ParticipantListContext } from "./participant-list-context";
 
+
 export interface SyncflowParticipantListTheme {
   root: SyncflowParticipantListRootTheme;
   header: SyncflowParticipantListHeaderTheme;
@@ -33,16 +34,22 @@ export interface SyncflowParticipantListLoopTheme {
 }
 
 export interface ParticipantListProps extends ComponentProps<"div"> {
-  theme? : DeepPartial<SyncflowParticipantListTheme>;
+  theme?: DeepPartial<SyncflowParticipantListTheme>;
+  onParticipantExpand: (identity: string | undefined) => void;
 }
 
 export default function ParticipantList({
-  theme:customTheme = {},
-  className
-} : ParticipantListProps) {
+  theme: customTheme = {},
+  className,
+  onParticipantExpand,
+}: ParticipantListProps) {
   const participants = useParticipants();
-  const defaultTheme = participantListTheme
+  const defaultTheme = participantListTheme;
   const theme = mergeDeep(defaultTheme, customTheme);
+
+  const handleParticipantExpand = (identity: string | null) => {
+    onParticipantExpand(identity);
+  };
 
   return (
     <ParticipantListContext.Provider value={{ theme }}>
@@ -54,16 +61,18 @@ export default function ParticipantList({
               type="text"
               placeholder="Search"
               className={theme.header.search.input}
-              // Dummy input with no functionality
             />
           </div>
         </div>
         <div className={theme.loop?.base}>
           <ParticipantLoop participants={participants}>
-            <SingleParticipant theme={theme.participant} />
+            <SingleParticipant
+              theme={theme.participant}
+              onExpand={handleParticipantExpand}
+            />
           </ParticipantLoop>
         </div>
       </div>
     </ParticipantListContext.Provider>
   );
-};
+}
