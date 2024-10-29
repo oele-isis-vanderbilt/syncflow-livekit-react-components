@@ -1,8 +1,8 @@
-import { ComponentProps, useEffect, useRef, useState } from "react";
+import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { Volume2 } from "lucide-react";
-import { TrackReference } from "@livekit/components-react";
+import type { TrackReference } from "@livekit/components-react";
 import { LiveAudioVisualizer } from "react-audio-visualize";
-import { DeepPartial } from "../../../types";
+import type { DeepPartial } from "../../../types";
 import { useParticipantListContext } from "../participant-list-context";
 import { mergeDeep } from "../../../helpers/merge-deep";
 import { twMerge } from "tailwind-merge";
@@ -31,7 +31,7 @@ export default function ParticipantAudioTrack({
   
   const theme = mergeDeep(rootTheme.participant.audio.audioTrack, customTheme)
 
-  let audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
 

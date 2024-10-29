@@ -1,9 +1,11 @@
-import React, { ComponentProps, useState } from "react";
-import { TrackReference } from "@livekit/components-react";
+import { useState } from "react";
+import type { ComponentProps } from "react";
+import type { TrackReference } from "@livekit/components-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import ParticipantInfo from "./participant-props";
-import ParticipantAudioTrack, { SyncflowParticipantAudioTrackTheme } from "./participant-audio-track";
-import { DeepPartial } from "../../../types";
+import type ParticipantInfo from "./participant-props";
+import ParticipantAudioTrack from "./participant-audio-track";
+import type  { SyncflowParticipantAudioTrackTheme } from "./participant-audio-track"
+import type { DeepPartial } from "../../../types";
 import { mergeDeep } from "../../../helpers/merge-deep";
 import { useParticipantListContext } from "../participant-list-context";
 import { twMerge } from "tailwind-merge";

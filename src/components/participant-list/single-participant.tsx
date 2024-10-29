@@ -5,15 +5,15 @@ import {
   useParticipantTracks,
 } from "@livekit/components-react";
 import ParticipantHeader, {
-  SyncflowParticipantHeaderTheme,
+  type SyncflowParticipantHeaderTheme,
 } from "./widgets/participant-header";
 import ParticipantVideoView, {
-  SyncflowParticipantVideoViewTheme,
+  type SyncflowParticipantVideoViewTheme,
 } from "./widgets/participant-video-view";
 import ParticipantAudioView, {
-  SyncflowParticipantAudioViewTheme,
+  type SyncflowParticipantAudioViewTheme,
 } from "./widgets/participant-audio-view";
-import { DeepPartial } from "../../types";
+import type { DeepPartial } from "../../types";
 import { mergeDeep } from "../../helpers/merge-deep";
 import { twMerge } from "tailwind-merge";
 import { useParticipantListContext } from "./participant-list-context";

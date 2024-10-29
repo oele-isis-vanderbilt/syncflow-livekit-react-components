@@ -1,17 +1,14 @@
-import React, { ComponentProps } from "react";
-import { MoreVertical, Plus, Maximize2 } from "lucide-react";
+import type { ComponentProps } from "react";
 import {
-  TrackReference,
   useParticipantTracks,
-  useTracks,
-  VideoTrack,
 } from "@livekit/components-react";
 import { Track } from "livekit-client";
-import { DeepPartial } from "../../types";
+import type { DeepPartial } from "../../types";
 import { collectionsTheme } from "./theme";
 import { mergeDeep } from "../../helpers/merge-deep";
 import { CollectionsContext } from "./collections-context";
-import CollectionVideoView, { SyncflowCollectionsVideoViewTheme } from "./collections-video-view";
+import type{ SyncflowCollectionsVideoViewTheme } from "./collections-video-view";
+import CollectionVideoView from "./collections-video-view";
 
 export interface SyncflowCollectionsTheme {
   root: SyncflowCollectionsRootTheme;
@@ -41,7 +38,6 @@ export interface CollectionsProps extends ComponentProps<"div"> {
 
 export default function Collections({ 
   theme: customTheme = {},
-  className,
   expandedParticipant 
 }: CollectionsProps) {
   const defaultTheme = collectionsTheme

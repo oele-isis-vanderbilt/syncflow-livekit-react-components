@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import { SyncflowCollectionsTheme } from "./collections";
+import type { SyncflowCollectionsTheme } from "./collections";
 
 type CollectionsContext = {
   theme: SyncflowCollectionsTheme;

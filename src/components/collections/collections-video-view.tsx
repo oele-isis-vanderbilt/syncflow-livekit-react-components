@@ -1,6 +1,7 @@
-import React, { ComponentProps, useState, useRef } from "react";
+import { useState, useRef } from "react";
+import type { ComponentProps } from "react";
 import {
-  TrackReference,
+  type TrackReference,
   VideoTrack,
   AudioTrack,
 } from "@livekit/components-react";
@@ -11,7 +12,7 @@ import {
   Volume2,
   ChevronDown,
 } from "lucide-react";
-import { DeepPartial } from "../../types";
+import type { DeepPartial } from "../../types";
 import { mergeDeep } from "../../helpers/merge-deep";
 import { twMerge } from "tailwind-merge";
 import { useCollectionsContext } from "./collections-context";

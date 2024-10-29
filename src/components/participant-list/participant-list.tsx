@@ -1,10 +1,9 @@
-import React, { ComponentProps, ComponentPropsWithoutRef } from "react";
+import type { ComponentProps } from "react";
 import { ParticipantLoop, useParticipants } from "@livekit/components-react";
-import ParticipantInfo from "./widgets/participant-props";
-import SingleParticipant, { SyncflowSingleParticipantTheme } from "./single-participant";
+import SingleParticipant, { type SyncflowSingleParticipantTheme } from "./single-participant";
 import { participantListTheme } from "./theme";
 import { twMerge } from "tailwind-merge";
-import { DeepPartial } from "../../types";
+import type { DeepPartial } from "../../types";
 import { mergeDeep } from "../../helpers/merge-deep";
 import { ParticipantListContext } from "./participant-list-context";
 
