@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 async def get_token():
     access_token = api.AccessToken().\
-    with_identity("DemoRoomMonitor").\
+    with_identity("MobileUser1").\
     with_grants(
         grants=api.VideoGrants(
             room_join=True,

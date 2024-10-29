@@ -1,7 +1,7 @@
-import React, { ComponentProps, useState } from "react";
-import { TrackReference, VideoTrack } from "@livekit/components-react";
+import { type ComponentProps, useState } from "react";
+import { type TrackReference, VideoTrack } from "@livekit/components-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DeepPartial } from "../../../types";
+import type { DeepPartial } from "../../../types";
 import { useParticipantListContext } from "../participant-list-context";
 import { mergeDeep } from "../../../helpers/merge-deep";
 import { twMerge } from "tailwind-merge";

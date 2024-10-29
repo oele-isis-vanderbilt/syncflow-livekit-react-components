@@ -1,12 +1,12 @@
-import React, { ComponentProps, ComponentPropsWithoutRef } from "react";
+import type { ComponentProps } from "react";
 import { ParticipantLoop, useParticipants } from "@livekit/components-react";
-import ParticipantInfo from "./widgets/participant-props";
-import SingleParticipant, { SyncflowSingleParticipantTheme } from "./single-participant";
+import SingleParticipant, { type SyncflowSingleParticipantTheme } from "./single-participant";
 import { participantListTheme } from "./theme";
 import { twMerge } from "tailwind-merge";
-import { DeepPartial } from "../../types";
+import type { DeepPartial } from "../../types";
 import { mergeDeep } from "../../helpers/merge-deep";
 import { ParticipantListContext } from "./participant-list-context";
+
 
 export interface SyncflowParticipantListTheme {
   root: SyncflowParticipantListRootTheme;
@@ -33,16 +33,22 @@ export interface SyncflowParticipantListLoopTheme {
 }
 
 export interface ParticipantListProps extends ComponentProps<"div"> {
-  theme? : DeepPartial<SyncflowParticipantListTheme>;
+  theme?: DeepPartial<SyncflowParticipantListTheme>;
+  onParticipantExpand: (identity: string | undefined) => void;
 }
 
 export default function ParticipantList({
-  theme:customTheme = {},
-  className
-} : ParticipantListProps) {
+  theme: customTheme = {},
+  className,
+  onParticipantExpand,
+}: ParticipantListProps) {
   const participants = useParticipants();
-  const defaultTheme = participantListTheme
+  const defaultTheme = participantListTheme;
   const theme = mergeDeep(defaultTheme, customTheme);
+
+  const handleParticipantExpand = (identity: string | null) => {
+    onParticipantExpand(identity);
+  };
 
   return (
     <ParticipantListContext.Provider value={{ theme }}>
@@ -54,16 +60,18 @@ export default function ParticipantList({
               type="text"
               placeholder="Search"
               className={theme.header.search.input}
-              // Dummy input with no functionality
             />
           </div>
         </div>
         <div className={theme.loop?.base}>
           <ParticipantLoop participants={participants}>
-            <SingleParticipant theme={theme.participant} />
+            <SingleParticipant
+              theme={theme.participant}
+              onExpand={handleParticipantExpand}
+            />
           </ParticipantLoop>
         </div>
       </div>
     </ParticipantListContext.Provider>
   );
-};
+}

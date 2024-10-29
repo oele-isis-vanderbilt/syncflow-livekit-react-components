@@ -1,4 +1,4 @@
-import Room from "./components/room";
+import Room from "./components/Room";
 
 
 function App() {

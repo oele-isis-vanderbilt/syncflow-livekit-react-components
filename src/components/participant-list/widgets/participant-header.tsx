@@ -1,4 +1,5 @@
-import React, { ComponentProps } from "react";
+import type React from "react";
+import type { ComponentProps } from "react";
 import {
   Video,
   Mic,
@@ -6,8 +7,8 @@ import {
   ChevronDown,
   ScreenShare,
 } from "lucide-react";
-import ParticipantInfo from "./participant-props";
-import { DeepPartial } from "../../../types";
+import type ParticipantInfo from "./participant-props";
+import type { DeepPartial } from "../../../types";
 import { useParticipantListContext } from "../participant-list-context";
 import { mergeDeep } from "../../../helpers/merge-deep";
 import { twMerge } from "tailwind-merge";

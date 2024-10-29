@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import { SyncflowParticipantListTheme } from "./participant-list";
+import type { SyncflowParticipantListTheme } from "./participant-list";
 
 
 type ParticipantListContext = {
