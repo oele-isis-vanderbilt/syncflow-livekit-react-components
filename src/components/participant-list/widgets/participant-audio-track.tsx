@@ -37,48 +37,36 @@ export default function ParticipantAudioTrack({
 
   useEffect(() => {
     const track = trackRef.publication?.track;
-    if (audioRef.current) {
-      track?.attach(audioRef.current);
-      audioRef.current.muted = !isPlaying;
-      if (isPlaying) {
-        startRecording();
-      } else {
-        stopRecording();
-      }
+    if (track && audioRef.current) {
+      track.attach(audioRef.current);
     }
-
     return () => {
-      track?.detach();
-      stopRecording();
+      if (track) {
+        track.detach();
+      }
+      if (mediaRecorder && mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+        setMediaRecorder(null);
+      }
     };
-  }, [trackRef, isPlaying]);
-
-  const startRecording = () => {
-    if (audioRef.current) {
-      const mediaStream = audioRef.current.captureStream();
-      const newMediaRecorder = new MediaRecorder(mediaStream, {
-        mimeType: "audio/webm",
-      });
-      newMediaRecorder.start();
-      setMediaRecorder(newMediaRecorder);
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorder && mediaRecorder.state !== "inactive") {
-      mediaRecorder.stop();
-      setMediaRecorder(null);
-    }
-  };
+  }, [trackRef]);
 
   const togglePlayback = () => {
     if (audioRef.current) {
       if (!isPlaying) {
         audioRef.current.play();
         setIsPlaying(true);
+        const mediaStream = audioRef.current.captureStream();
+        const mediaRecorder = new MediaRecorder(mediaStream, {
+          mimeType: "audio/webm",
+        });
+        mediaRecorder.start();
+        setMediaRecorder(mediaRecorder);
       } else {
         audioRef.current.pause();
         setIsPlaying(false);
+        mediaRecorder?.stop();
+        setMediaRecorder(null);
       }
     }
   };
