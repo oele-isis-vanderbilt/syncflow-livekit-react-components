@@ -4,7 +4,7 @@ import { createContext, useContext } from "react";
 import type { SyncflowCollectionsTheme } from "./collections";
 
 type CollectionsContext = {
-  theme: SyncflowCollectionsTheme;
+  theme: SyncflowCollectionsTheme | undefined;
 };
 
 export const CollectionsContext = createContext<CollectionsContext | undefined>(

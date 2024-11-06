@@ -58,7 +58,8 @@ export default function CollectionVideoView({
   className,
 }: VideoViewProps) {
   const { theme: rootTheme } = useCollectionsContext();
-  const theme = mergeDeep(rootTheme.collection.video, customTheme);
+  // @ts-ignore
+  const theme = mergeDeep(rootTheme.collection.video, customTheme); 
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
   const [selectedAudio, setSelectedAudio] = useState<number>(0);
   const [isAudioDropdownOpen, setIsAudioDropdownOpen] =

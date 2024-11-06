@@ -12,7 +12,7 @@ export interface SyncflowParticipantListTheme {
   root: SyncflowParticipantListRootTheme;
   header: SyncflowParticipantListHeaderTheme;
   participant: SyncflowSingleParticipantTheme;
-  loop: SyncflowParticipantListLoopTheme;
+  loop?: SyncflowParticipantListLoopTheme;
 }
 
 export interface SyncflowParticipantListRootTheme {
@@ -46,11 +46,12 @@ export default function ParticipantList({
   const defaultTheme = participantListTheme;
   const theme = mergeDeep(defaultTheme, customTheme);
 
-  const handleParticipantExpand = (identity: string | null) => {
+  const handleParticipantExpand = (identity: string | undefined) => {
     onParticipantExpand(identity);
   };
 
   return (
+    // @ts-ignore
     <ParticipantListContext.Provider value={{ theme }}>
       <div className={twMerge(defaultTheme.root.base, className)}>
         <div className={theme.header.base}>

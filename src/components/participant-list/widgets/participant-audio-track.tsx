@@ -7,6 +7,10 @@ import { useParticipantListContext } from "../participant-list-context";
 import { mergeDeep } from "../../../helpers/merge-deep";
 import { twMerge } from "tailwind-merge";
 
+interface HTMLAudioElementWithCaptureStream extends HTMLAudioElement {
+  captureStream(): MediaStream;
+}
+
 export interface SyncflowParticipantAudioTrackTheme {
   base: string,
   inner: string
@@ -31,7 +35,7 @@ export default function ParticipantAudioTrack({
   
   const theme = mergeDeep(rootTheme.participant.audio.audioTrack, customTheme)
 
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElementWithCaptureStream>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
 
@@ -79,9 +83,9 @@ export default function ParticipantAudioTrack({
           setIsPlaying(false);
         }}
         hidden
-      ></audio>
+      />
       <div className={theme.inner}>
-        <button onClick={togglePlayback}>
+        <button type="button" onClick={togglePlayback}>
           <Volume2
             className={twMerge(
               theme.volume.base,

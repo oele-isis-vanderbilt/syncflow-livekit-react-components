@@ -1,8 +1,35 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import dts from "vite-plugin-dts";
+import path from "path";
+import react from "@vitejs/plugin-react";
+import type { UserConfig } from "vite";
+import { defineConfig } from "vite";
 import tailwindcss from "tailwindcss";
 
-// https://vitejs.dev/config/
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-});
+  base: "",
+  plugins: [dts({ rollupTypes: true }), react()],
+  css: {
+    postcss: {
+      plugins: [tailwindcss()],
+    }
+  },
+  build: {
+    sourcemap: true,
+    lib: {
+      entry: path.resolve(__dirname, "src/index.ts"),
+      name: "syncflow-livekit-react-components",
+      formats: ["es", "cjs"],
+      fileName: (format) => `index.${format}.js`,
+    },
+    rollupOptions: {
+      external: ["react", "react-dom"],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
+    },
+  },
+} satisfies UserConfig);

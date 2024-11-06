@@ -1,4 +1,5 @@
-import React, { ComponentProps, useState } from "react";
+import type { ComponentProps } from "react";
+import { useState } from "react";
 import { Track } from "livekit-client";
 import {
   useParticipantInfo,
@@ -67,7 +68,7 @@ export default function SingleParticipant({
       trackRef.source === Track.Source.ScreenShare
   );
 
-  const handleViewToggle = (view) => {
+  const handleViewToggle = (view: string) => {
     setActiveView(view);
   };
 

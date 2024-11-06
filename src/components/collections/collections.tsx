@@ -62,6 +62,7 @@ export default function Collections({
   );
 
   return (
+    // @ts-ignore
     <CollectionsContext.Provider value={{ theme, expandedParticipant }}>
       <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-4">
